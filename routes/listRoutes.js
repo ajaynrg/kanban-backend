@@ -1,14 +1,8 @@
-import List from "../models/List.js";
+import express from "express";
+import { createList, getLists } from "../controllers/listController.js";
+const router = express.Router();
 
-const getLists= async (req, res) => {
-  const lists = await List.find().populate("lists");
-  res.json(lists);
-};
+router.get("/", getLists);
+router.post("/", createList);
 
-const createList= async (req, res) => {
-  const list = new List({ title: req.body.title });
-  await list.save();
-  res.status(201).json(list);
-};
-
-export { createList, getLists };
+export default router;

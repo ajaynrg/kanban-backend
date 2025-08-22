@@ -1,15 +1,8 @@
-import Card from "../models/Card.js";
+import express from "express";
+import { createCard, getCards } from "../controllers/cardController.js";
+const router = express.Router();
 
-const getCards= async (req, res) => {
-  const cards = await Card.find().populate("lists");
-  res.json(cards);
-};
+router.get("/", getCards);
+router.post("/", createCard);
 
-const createCard = async (req, res) => {
-  const card = new Card({ title: req.body.title });
-  await card.save();
-  res.status(201).json(card);
-};
-
-export { createCard, getCards };
-
+export default router;
