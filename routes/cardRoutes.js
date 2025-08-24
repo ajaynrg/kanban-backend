@@ -1,8 +1,11 @@
 import express from "express";
-import { createCard, getCards } from "../controllers/cardController.js";
+import { createCard, deleteCard, moveCard, updateCard } from "../controllers/cardController.js";
+
 const router = express.Router();
 
-router.get("/", getCards);
-router.post("/", createCard);
+router.post("/:listId", createCard);    // add card to a list
+router.put("/:id", updateCard);         // update card
+router.delete("/:id", deleteCard);      // delete card
+router.put("/:id/move/:newListId", moveCard); // move card between lists
 
 export default router;
