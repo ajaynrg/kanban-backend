@@ -20,3 +20,8 @@ app.use("/api/cards", cardRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// To fix the error "SyntaxError: The requested module '../index.js' does not provide an export named 'default'",
+// you need to export something as default from this file. For an Express app, it's common to export the app instance.
+
+export default app;
