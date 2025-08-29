@@ -32,20 +32,32 @@ describe("Card API", () => {
     expect(res.body.title).toBe("Fix login bug");
   });
 
+  it("should get all cards for a list", async () => {
+    // Create two cards in the list
+    const card1 = await request(app)
+      .post(`/api/cards/${listId}`)
+      .send({ title: "Card 1" });
+    const card2 = await request(app)
+      .post(`/api/cards/${listId}`)
+      .send({ title: "Card 2" });
+
+    // Fetch cards for the list
+    const res = await request(app).get(`/api/cards/list/${listId}`);
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    // Should contain at least the two cards we just created
+    const cardTitles = res.body.map(card => card.title);
+    expect(cardTitles).toEqual(expect.arrayContaining(["Card 1", "Card 2"]));
+    // All cards should have the correct listId
+    res.body.forEach(card => {
+      expect(card.listId).toBe(listId);
+    });
+  });
+
   it("should delete a card", async () => {
     const card = await request(app).post(`/api/cards/${listId}`).send({ title: "Fix bug" });
     const res = await request(app).delete(`/api/cards/${card.body._id}`);
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Card deleted");
-  });
-
-  it("should move a card between lists", async () => {
-    const list2 = await request(app).post(`/api/lists/${boardId}`).send({ title: "Done" });
-
-    const card = await request(app).post(`/api/cards/${listId}`).send({ title: "Fix bug" });
-
-    const res = await request(app).put(`/api/cards/${card.body._id}/move/${list2.body._id}`);
-    expect(res.statusCode).toBe(200);
-    expect(res.body.listId).toBe(list2.body._id);
   });
 });

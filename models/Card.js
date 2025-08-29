@@ -1,10 +1,35 @@
 import mongoose from "mongoose";
 
-const cardSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: String,
-  dueDate: Date,
-  listId: { type: mongoose.Schema.Types.ObjectId, ref: "List" }
-});
+const cardSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      default: "",
+    },
+    listId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "List",
+      required: true,
+    },
+    position: {
+      type: Number,
+      default: 0, // used for ordering within a list
+    },
+    dueDate: {
+      type: Date,
+    },
+    labels: [
+      {
+        type: String,
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model("Card", cardSchema);

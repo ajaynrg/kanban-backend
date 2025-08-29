@@ -1,5 +1,17 @@
 import Card from "../models/Card.js";
 import List from "../models/List.js";
+import { normalizeCardPositions } from "../utils/reorder.js";
+
+// Get cards for a list
+export const getCardsByList = async (req, res) => {
+  try {
+    const { listId } = req.params;
+    const cards = await Card.find({ listId }).sort("position");
+    res.json(cards);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 export const createCard = async (req, res) => {
   try {
@@ -44,21 +56,30 @@ export const deleteCard = async (req, res) => {
 
 export const moveCard = async (req, res) => {
   try {
-    const { id, newListId } = req.params;
+    const { id } = req.params; // card id
+    const { targetListId, newPosition } = req.body;
+
     const card = await Card.findById(id);
+    if (!card) return res.status(404).json({ error: "Card not found" });
 
-    if (!card) return res.status(404).json({ message: "Card not found" });
+    // Move across lists
+    if (targetListId && card.listId.toString() !== targetListId) {
+      card.listId = targetListId;
+    }
 
-    // remove from old list
-    await List.findByIdAndUpdate(card.listId, { $pull: { cards: id } });
+    // Assign temporary fractional position
+    if (typeof newPosition === "number") {
+      card.position = newPosition;
+    }
 
-    // add to new list
-    card.listId = newListId;
     await card.save();
-    await List.findByIdAndUpdate(newListId, { $push: { cards: id } });
 
-    res.json(card);
+    // ✅ normalize positions in target list
+    await normalizeCardPositions(card.listId);
+
+    const updatedCards = await Card.find({ listId: card.listId }).sort({ position: 1 });
+    res.json(updatedCards);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
