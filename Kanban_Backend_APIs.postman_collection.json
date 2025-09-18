@@ -168,7 +168,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"title\": \"Implement user authentication\",\n  \"description\": \"Add login and registration functionality\",\n  \"position\": 0\n}"
+							"raw": "{\n  \"title\": \"Implement user authentication\",\n  \"description\": \"Add login and registration functionality\",\n  \"assignee\": \"User 1\",\n  \"position\": 0\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/cards/{{listId}}",

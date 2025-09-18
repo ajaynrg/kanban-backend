@@ -11,6 +11,10 @@ const cardSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    assignee: {
+      type: String,
+      default: "",
+    },
     listId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "List",

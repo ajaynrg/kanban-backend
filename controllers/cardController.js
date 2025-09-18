@@ -18,7 +18,7 @@ export const createCard = async (req, res) => {
     const { title, description, dueDate } = req.body;
     const { listId } = req.params;
 
-    const card = new Card({ title, description, dueDate, listId });
+    const card = new Card({ title, description, assignee, dueDate, listId });
     await card.save();
 
     await List.findByIdAndUpdate(listId, { $push: { cards: card._id } });
