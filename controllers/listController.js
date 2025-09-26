@@ -1,6 +1,15 @@
 import Board from "../models/Board.js";
 import List from "../models/List.js";
 
+export const getLists = async (req, res) => {
+  try {
+    const lists = await List.find().populate('boardId', 'title');
+    res.json(lists);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export const createList = async (req, res) => {
   try {
     const { title } = req.body;

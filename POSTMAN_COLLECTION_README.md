@@ -29,6 +29,7 @@ This directory contains a complete Postman collection for testing all APIs in th
 - **POST** `/api/boards` - Create a new board
 
 ### Lists
+- **GET** `/api/lists` - Get all lists with board information
 - **POST** `/api/lists/:boardId` - Create a list in a board
 - **PUT** `/api/lists/:id` - Update list title
 - **DELETE** `/api/lists/:id` - Delete a list

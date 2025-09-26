@@ -13,13 +13,23 @@ connectDB();
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-app.use("/api/boards", boardRoutes);
-// Middleware for request logging
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.path} - ${new Date().toISOString()}`);
+// Enhanced logging middleware
+const loggingMiddleware = (req, res, next) => {
+    const start = Date.now();
+    const timestamp = new Date().toISOString();
+    
+    console.log(`[${timestamp}] ${req.method} ${req.originalUrl} - IP: ${req.ip || req.connection.remoteAddress}`);
+    
+    // Log response time when request completes
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+        console.log(`[${timestamp}] ${req.method} ${req.originalUrl} - ${res.statusCode} - ${duration}ms`);
+    });
+    
     next();
-});
+};
+// Middleware for request logging
+app.use(loggingMiddleware);
 
 // Request validation middleware (example for common validations)
 const validateRequest = (req, res, next) => {
@@ -63,12 +73,12 @@ const rateLimit = (windowMs = 15 * 60 * 1000, max = 100) => {
 };
 
 app.use(rateLimit());
-
+app.use("/api/boards", boardRoutes);
 app.use("/api/lists", listRoutes);
 app.use("/api/cards", cardRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port https://localhost:${PORT}`));
 
 // To fix the error "SyntaxError: The requested module '../index.js' does not provide an export named 'default'",
 // you need to export something as default from this file. For an Express app, it's common to export the app instance.

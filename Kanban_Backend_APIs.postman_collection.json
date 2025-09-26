@@ -68,6 +68,30 @@
 			"name": "Lists",
 			"item": [
 				{
+					"name": "Get All Lists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/lists",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"lists"
+							]
+						},
+						"description": "Retrieve all lists from the database with populated board information"
+					},
+					"response": []
+				},
+				{
 					"name": "Create List",
 					"request": {
 						"method": "POST",
