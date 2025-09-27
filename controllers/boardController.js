@@ -6,7 +6,7 @@ const getBoards = async (req, res) => {
 };
 
 const createBoard = async (req, res) => {
-  const board = new Board({ title: req.body.title });
+  const board = new Board({ title: req.body.title, user: req.body.user});
   await board.save();
   res.status(201).json(board);
 };
