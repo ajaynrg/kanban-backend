@@ -21,5 +21,15 @@ const deleteBoard = async (req, res) => {
   res.status(204).end();
 };
 
-export { createBoard, getBoards, deleteBoard };
+const updateBoard = async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+  const board = await Board.findByIdAndUpdate(id, updatedData, { new: true });
+  if (!board) {
+    return res.status(404).json({ message: "Board not found" });
+  }
+  res.json(board);
+}
+
+export { createBoard, getBoards, deleteBoard, updateBoard };
 
