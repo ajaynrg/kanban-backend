@@ -15,10 +15,10 @@ export const getCardsByList = async (req, res) => {
 
 export const createCard = async (req, res) => {
   try {
-    const { title, description, assignee, dueDate } = req.body;
+    const { title, description, assignee, dueDate, createdBy } = req.body;
     const { listId } = req.params;
 
-    const card = new Card({ title, description, assignee, dueDate, listId });
+    const card = new Card({ title, description, assignee, dueDate, createdBy, listId });
     await card.save();
 
     await List.findByIdAndUpdate(listId, { $push: { cards: card._id } });

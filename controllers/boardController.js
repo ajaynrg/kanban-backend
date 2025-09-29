@@ -6,10 +6,20 @@ const getBoards = async (req, res) => {
 };
 
 const createBoard = async (req, res) => {
-  const board = new Board({ title: req.body.title, user: req.body.user});
+  const board = new Board({ 
+    title: req.body.title, 
+    description: req.body.description, 
+    createdBy: req.body.createdBy
+  });
   await board.save();
   res.status(201).json(board);
 };
 
-export { createBoard, getBoards };
+const deleteBoard = async (req, res) => {
+  const { id } = req.params;
+  await Board.findByIdAndDelete(id);
+  res.status(204).end();
+};
+
+export { createBoard, getBoards, deleteBoard };
 
