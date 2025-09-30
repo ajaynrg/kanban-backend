@@ -17,7 +17,6 @@ const cardSchema = new mongoose.Schema(
     },
     listId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "List",
       required: true,
     },
     position: {
@@ -41,8 +40,7 @@ const cardSchema = new mongoose.Schema(
       default: Date.now,
     },
     createdBy: {
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "User" 
+      type: mongoose.Schema.Types.ObjectId
     },
   },
   { timestamps: true }

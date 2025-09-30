@@ -12,10 +12,10 @@ export const getLists = async (req, res) => {
 
 export const createList = async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, description } = req.body;
     const { boardId } = req.params;
 
-    const list = new List({ title, boardId });
+    const list = new List({ title, description, boardId });
     await list.save();
 
     // This line finds the Board document with the given boardId and adds the new list's _id to its 'lists' array field.
