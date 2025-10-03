@@ -43,6 +43,10 @@ export const deleteList = async (req, res) => {
     const list = await List.findByIdAndDelete(id);
 
     if (list) {
+      // Delete all cards associated with this list (cascading delete)
+      await Card.deleteMany({ listId: id });
+      
+      // Remove the list from the board's lists array
       await Board.findByIdAndUpdate(list.boardId, { $pull: { lists: id } });
     }
     res.json({ message: "List deleted" });

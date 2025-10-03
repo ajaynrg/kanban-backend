@@ -18,6 +18,12 @@ export const createCard = async (req, res) => {
     const { title, description, assignee, dueDate, createdBy } = req.body;
     const { listId } = req.params;
 
+    // Check if the list exists
+    const list = await List.findById(listId);
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
+
     const card = new Card({ title, description, assignee, dueDate, createdBy, listId });
     await card.save();
 
