@@ -15,7 +15,7 @@ export const getCardsByList = async (req, res) => {
 
 export const createCard = async (req, res) => {
   try {
-    const { title, description, assignee, dueDate, createdBy } = req.body;
+    const { title, description, assignee, labels, dueDate, createdBy } = req.body;
     const { listId } = req.params;
 
     // Check if the list exists
@@ -24,7 +24,7 @@ export const createCard = async (req, res) => {
       return res.status(404).json({ message: "List not found" });
     }
 
-    const card = new Card({ title, description, assignee, dueDate, createdBy, listId });
+    const card = new Card({ title, description, assignee, labels, dueDate, createdBy, listId });
     await card.save();
 
     await List.findByIdAndUpdate(listId, { $push: { cards: card._id } });

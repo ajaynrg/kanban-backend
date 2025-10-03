@@ -3,7 +3,7 @@ import List from "../models/List.js";
 
 export const getLists = async (req, res) => {
   try {
-    const lists = await List.find().populate('boardId', 'title');
+    const lists = await List.find().populate('boardId', 'title').populate('cards');
     res.json(lists);
   } catch (err) {
     res.status(500).json({ message: err.message });
