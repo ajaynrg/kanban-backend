@@ -1,5 +1,6 @@
 import Board from "../models/Board.js";
 import List from "../models/List.js";
+import Card from "../models/Card.js";
 
 export const getLists = async (req, res) => {
   try {

@@ -62,11 +62,14 @@ export const deleteCard = async (req, res) => {
 
 export const moveCard = async (req, res) => {
   try {
-    const { id } = req.params; // card id
-    const { targetListId, newPosition } = req.body;
+    const { id ,targetListId } = req.params; // card id
+    // const { newPosition } = req.body;
+    console.log("Target List ID:", targetListId, "Card ID:", id);
 
     const card = await Card.findById(id);
     if (!card) return res.status(404).json({ error: "Card not found" });
+    List.findByIdAndUpdate(card.listId, { $pull: { cards: id } }).exec();
+    List.findByIdAndUpdate(targetListId, { $push: { cards: id } }).exec();
 
     // Move across lists
     if (targetListId && card.listId.toString() !== targetListId) {
@@ -74,14 +77,14 @@ export const moveCard = async (req, res) => {
     }
 
     // Assign temporary fractional position
-    if (typeof newPosition === "number") {
-      card.position = newPosition;
-    }
+    // if (typeof newPosition === "number") {
+    //   card.position = newPosition;
+    // }
 
     await card.save();
 
     // ✅ normalize positions in target list
-    await normalizeCardPositions(card.listId);
+    // await normalizeCardPositions(card.listId);
 
     const updatedCards = await Card.find({ listId: card.listId }).sort({ position: 1 });
     res.json(updatedCards);
