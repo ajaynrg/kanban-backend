@@ -4,7 +4,8 @@ import Card from "../models/Card.js";
 
 export const getLists = async (req, res) => {
   try {
-    const lists = await List.find().populate('boardId', 'title').populate('cards');
+    const { boardId } = req.query;
+    const lists = await List.find({boardId}).populate('boardId').populate('cards');
     res.json(lists);
   } catch (err) {
     res.status(500).json({ message: err.message });
