@@ -1,0 +1,416 @@
+{
+	"info": {
+		"_postman_id": "kanban-backend-collection",
+		"name": "Kanban Backend APIs",
+		"description": "Complete API collection for Kanban Backend project with all CRUD operations for Boards, Lists, and Cards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Boards",
+			"item": [
+				{
+					"name": "Get All Boards",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/boards",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"boards"
+							]
+						},
+						"description": "Retrieve all boards from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Board",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"My Project Board\",\n  \"description\": \"A board for managing project tasks\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/boards",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"boards"
+							]
+						},
+						"description": "Create a new board with title and optional description"
+					},
+					"response": []
+				}
+			],
+			"description": "API endpoints for managing Kanban boards"
+		},
+		{
+			"name": "Lists",
+			"item": [
+				{
+					"name": "Get All Lists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/lists",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"lists"
+							]
+						},
+						"description": "Retrieve all lists from the database with populated board information"
+					},
+					"response": []
+				},
+				{
+					"name": "Create List",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"To Do\",\n  \"position\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/lists/{{boardId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"{{boardId}}"
+							]
+						},
+						"description": "Create a new list in a specific board. Replace {{boardId}} with actual board ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update List",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"In Progress\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/lists/{{listId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"{{listId}}"
+							]
+						},
+						"description": "Update list title. Replace {{listId}} with actual list ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete List",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/lists/{{listId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"{{listId}}"
+							]
+						},
+						"description": "Delete a list by ID. Replace {{listId}} with actual list ID."
+					},
+					"response": []
+				}
+			],
+			"description": "API endpoints for managing lists within boards"
+		},
+		{
+			"name": "Cards",
+			"item": [
+				{
+					"name": "Create Card",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Implement user authentication\",\n  \"description\": \"Add login and registration functionality\",\n  \"assignee\": \"User 1\",\n  \"position\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cards/{{listId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cards",
+								"{{listId}}"
+							]
+						},
+						"description": "Create a new card in a specific list. Replace {{listId}} with actual list ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cards by List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/cards/list/{{listId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cards",
+								"list",
+								"{{listId}}"
+							]
+						},
+						"description": "Retrieve all cards belonging to a specific list. Replace {{listId}} with actual list ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Card",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated card title\",\n  \"description\": \"Updated card description\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cards/{{cardId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cards",
+								"{{cardId}}"
+							]
+						},
+						"description": "Update card details. Replace {{cardId}} with actual card ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Move Card Between Lists",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"position\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cards/{{cardId}}/move/{{newListId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cards",
+								"{{cardId}}",
+								"move",
+								"{{newListId}}"
+							]
+						},
+						"description": "Move a card from one list to another. Replace {{cardId}} with actual card ID and {{newListId}} with target list ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Card",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/cards/{{cardId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cards",
+								"{{cardId}}"
+							]
+						},
+						"description": "Delete a card by ID. Replace {{cardId}} with actual card ID."
+					},
+					"response": []
+				}
+			],
+			"description": "API endpoints for managing cards within lists"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set default values if variables are not defined",
+					"if (!pm.environment.get('baseUrl')) {",
+					"    pm.environment.set('baseUrl', 'http://localhost:5000');",
+					"}",
+					"",
+					"// Log the request for debugging",
+					"console.log('Making request to:', pm.request.url.toString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Common test scripts for all requests",
+					"pm.test('Response time is less than 2000ms', function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+					"});",
+					"",
+					"pm.test('Response should be JSON', function () {",
+					"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+					"});",
+					"",
+					"// Store IDs from successful POST requests for use in other requests",
+					"if (pm.response.code === 200 || pm.response.code === 201) {",
+					"    const responseJson = pm.response.json();",
+					"    ",
+					"    // Store board ID if this is a board creation",
+					"    if (pm.request.url.toString().includes('/api/boards') && pm.request.method === 'POST') {",
+					"        if (responseJson._id || responseJson.id) {",
+					"            pm.environment.set('boardId', responseJson._id || responseJson.id);",
+					"            console.log('Stored boardId:', responseJson._id || responseJson.id);",
+					"        }",
+					"    }",
+					"    ",
+					"    // Store list ID if this is a list creation",
+					"    if (pm.request.url.toString().includes('/api/lists') && pm.request.method === 'POST') {",
+					"        if (responseJson._id || responseJson.id) {",
+					"            pm.environment.set('listId', responseJson._id || responseJson.id);",
+					"            console.log('Stored listId:', responseJson._id || responseJson.id);",
+					"        }",
+					"    }",
+					"    ",
+					"    // Store card ID if this is a card creation",
+					"    if (pm.request.url.toString().includes('/api/cards') && pm.request.method === 'POST') {",
+					"        if (responseJson._id || responseJson.id) {",
+					"            pm.environment.set('cardId', responseJson._id || responseJson.id);",
+					"            console.log('Stored cardId:', responseJson._id || responseJson.id);",
+					"        }",
+					"    }",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "boardId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "listId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "cardId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "newListId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
